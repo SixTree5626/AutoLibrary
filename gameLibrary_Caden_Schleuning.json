@@ -24,12 +24,6 @@
     "developer": "Roblox Corporation"
   },
   {
-    "releaseDate": "August 1, 1992",
-    "title": "Mortal Kombat (1992)",
-    "genre": "Fighting",
-    "developer": "Midway"
-  },
-  {
     "releaseDate": "",
     "title": "Minecraft",
     "genre": "Sandbox, survival",
@@ -160,5 +154,53 @@
     "title": "Pokemon Omega Ruby",
     "genre": "Role-playing",
     "developer": "Game Freak"
+  },
+  {
+    "releaseDate": "August 1, 1992",
+    "title": "Mortal Kombat (1992)",
+    "genre": "Fighting",
+    "developer": "Midway"
+  },
+  {
+    "releaseDate": "November 7, 2006",
+    "title": "Guitar Hero II",
+    "genre": "Rhythm",
+    "developer": "Harmonix"
+  },
+  {
+    "releaseDate": "October 28, 2007",
+    "title": "Guitar Hero III: Legends of Rock",
+    "genre": "Rhythm",
+    "developer": "Neversoft"
+  },
+  {
+    "releaseDate": "November 8, 2005",
+    "title": "Guitar Hero 1",
+    "genre": "Rhythm",
+    "developer": "Harmonix"
+  },
+  {
+    "releaseDate": "October 26, 2008",
+    "title": "Guitar Hero World Tour",
+    "genre": "Rhythm",
+    "developer": "Neversoft"
+  },
+  {
+    "releaseDate": "September 1, 2009",
+    "title": "Guitar Hero 5",
+    "genre": "Rhythm",
+    "developer": "Neversoft"
+  },
+  {
+    "releaseDate": "",
+    "title": "Guitar Hero Live",
+    "genre": "Rhythm",
+    "developer": "FreeStyleGames"
+  },
+  {
+    "releaseDate": "September 24, 2010",
+    "title": "Guitar Hero Warriors of Rock",
+    "genre": "Rhythm",
+    "developer": "Neversoft"
   }
 ]
