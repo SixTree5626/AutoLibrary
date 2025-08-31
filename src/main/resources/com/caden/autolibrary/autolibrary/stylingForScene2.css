@@ -1,0 +1,28 @@
+.root {
+      -fx-background-color: #000000;
+  }
+  
+#yesBtn {
+	-fx-background-color: #136B15;
+   	-fx-text-fill: "black";
+}
+
+#noBtn {
+	-fx-background-color: #6E1313;
+	-fx-text-fill: "black";
+}
+  
+.text-area {
+	-fx-control-inner-background: #111111;
+	-fx-font-family: "Comic Sans MS"; /* Change to your desired font type */
+    -fx-font-size: 16; /* Adjust font size as needed */
+    -fx-text-fill: #136B15; /* Red color, use hex code or color name */
+    -fx-font-weight: bold; /* Example: make text bold */
+}
+
+
+.label {
+	-fx-font-family: 'Comic Sans MS';
+	-fx-text-fill: #136B15;
+	-fx-alignment: center;
+}

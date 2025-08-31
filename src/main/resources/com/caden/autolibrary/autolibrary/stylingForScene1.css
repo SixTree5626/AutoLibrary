@@ -1,0 +1,17 @@
+.root {
+      -fx-background-color: #000000;
+  }
+.label {
+	-fx-font-family: 'Comic Sans MS';
+	-fx-text-fill: #136B15;
+	-fx-alignment: center;
+}
+ .button {
+     -fx-background-color: #136B15;
+     -fx-text-fill: "black";
+  }
+.text-field {
+	-fx-background-color: #111111;
+	-fx-font-family:'Comic Sans MS';
+	-fx-text-fill: #136B15;
+}

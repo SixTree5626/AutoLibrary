@@ -1,0 +1,26 @@
+.root{
+    -fx-background-color: #000000;
+}
+
+.text-field {
+	-fx-background-color: #111111;
+	-fx-font-family:'Comic Sans MS';
+	-fx-text-fill: #136B15;
+}
+
+.label {
+	fx-font-size: 20;
+		-fx-font-family: 'Comic Sans MS';
+		-fx-text-fill: #136B15;
+		-fx-alignment: center;
+}
+
+#GameBtn {
+-fx-background-color: #136B15;
+     -fx-text-fill: "black";
+}
+
+#GoBackBtn {
+-fx-background-color: #6E1313;
+     -fx-text-fill: "black";
+}
