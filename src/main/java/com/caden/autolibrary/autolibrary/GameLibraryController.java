@@ -8,11 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -26,6 +26,17 @@ import java.time.LocalDate;
 public class GameLibraryController {
     @FXML
     private TextArea libraryDisplay;
+
+    @FXML
+    private TextField gameInputField;
+
+    @FXML
+    private Button noBtn;
+
+    @FXML
+    private Button yesBtn;
+
+
 
     private Stage mainWindow;
     private String userName;
@@ -66,28 +77,9 @@ public class GameLibraryController {
 
     @FXML
     void onYesBtnClick(ActionEvent event) {
-        System.out.println("GameLibraryController: 'Yes' button clicked."); // Debug print
-        try {
-            if (mainWindow == null) {
-                System.err.println("GameLibraryController: mainWindow is null when 'Yes' button clicked."); // Critical debug
-                return;
-            }
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AutoAdd.fxml"));
-            Parent root = loader.load();
-            AutoAddController AutoAddController = loader.getController();
-            AutoAddController.setMainWindow(mainWindow);
-            AutoAddController.setUserName(userName);
-            AutoAddController.setGameLibrary(gameLibrary);
-
-            Scene scene = new Scene(root, 472, 248);
-            scene.getStylesheets().add(getClass().getResource("stylingForScene4.css").toExternalForm());
-            mainWindow.setScene(scene);
-            mainWindow.setTitle("Add New Game");
-            System.out.println("GameLibraryController: Navigated to Game Add screen."); // Debug print
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading Game Database screen: " + e.getMessage());
+        if (addCurrentGame()) {
+            saveLibrary(gameLibrary, fileName);
+            showLibrary();
         }
     }
 
@@ -137,4 +129,88 @@ public class GameLibraryController {
             .setPrettyPrinting()
             .create();
     }
+
+    private boolean addCurrentGame() {
+        String title = gameInputField.getText().trim();
+        WebScraper scraper = new WebScraper();
+        GameInfo info = scraper.Scrape(title);
+
+        if (info == null) {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameDatabase3.fxml"));
+                Parent root = loader.load();
+
+                GameDatabaseController gamedatabasecontroller = loader.getController();
+                gamedatabasecontroller.setMainWindow(mainWindow);
+                gamedatabasecontroller.setUserName(userName);
+                gamedatabasecontroller.setGameLibrary(gameLibrary);
+
+                Scene scene = new Scene(root, 600, 400);
+                scene.getStylesheets().add(getClass().getResource("stylingForScene3.css").toExternalForm());
+                mainWindow.setScene(scene);
+                mainWindow.setTitle("Add New Game");
+            }catch (IOException e) {
+                System.err.println("Failed to load the manual input screen: " + e.getMessage());
+                e.printStackTrace();
+            }
+            return false;
+
+        }
+
+
+        Game game = new Game();
+        game.setTitle(title);
+        game.setDeveloper(info.getDeveloper());
+        game.setDeveloper(info.getDeveloper());
+        game.setGenre(info.getGenre());
+
+        boolean validDate = false;
+
+        if(info.getReleaseDate() != null && !info.getReleaseDate().isEmpty()) {
+            validDate = game.setReleaseDate(info.getReleaseDate());
+            if (!validDate) {
+                System.out.println("Scraped release date format invalid. Please enter manually.");
+            }
+        }
+
+        // Add the new game to the library
+        gameLibrary.add(game);
+
+        saveLibrary(gameLibrary, fileName);
+
+        return true;
+
+
+    }
+
+    private void saveLibrary(ArrayList<Game> library, String fileName) {
+        try(Writer writer = new FileWriter(fileName)) {
+            Gson gson = buildGson();
+            gson.toJson(library, writer);
+        } catch (IOException e) {
+            System.out.println("Could not save library: " + e.getMessage());
+        }
+    }
+
+    private void showLibrary() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
+            Parent root = loader.load();
+
+            GameLibraryController gameLibraryController = loader.getController();
+            gameLibraryController.setMainWindow(mainWindow);
+            gameLibraryController.setUserName(userName);
+
+            Scene scene = new Scene(root, 600, 500);
+            scene.getStylesheets().add(getClass().getResource("stylingForScene2.css").toExternalForm());
+            mainWindow.setScene(scene);
+            mainWindow.setTitle(userName + "'s Game Library");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error loading Game Library Screen:" + e.getMessage());
+        }
+    }
+
+
+
 }

@@ -148,5 +148,17 @@
     "title": "Fall Guys",
     "genre": "Battle royale, platform",
     "developer": "Mediatonic"
+  },
+  {
+    "releaseDate": "September 16, 2004",
+    "title": "Pokemon Emerald",
+    "genre": "Role-playing",
+    "developer": "Game Freak"
+  },
+  {
+    "releaseDate": "",
+    "title": "Pokemon Omega Ruby",
+    "genre": "Role-playing",
+    "developer": "Game Freak"
   }
 ]

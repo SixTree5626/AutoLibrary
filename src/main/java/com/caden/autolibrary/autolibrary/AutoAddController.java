@@ -119,6 +119,7 @@ public class AutoAddController {
 
     }
 
+
     private void saveLibrary(ArrayList<Game> library, String fileName) {
         try(Writer writer = new FileWriter(fileName)) {
             Gson gson = buildGson();
