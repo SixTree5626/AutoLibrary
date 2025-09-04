@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.caden.autolibrary.autolibrary.Controller">
    <children>
       <Label layoutX="149.0" layoutY="49.0" text="Name:" />
-      <TextField fx:id="tfName" layoutX="119.0" layoutY="100.0" prefHeight="26.0" prefWidth="94.0" promptText="Enter your name" />
-      <Button fx:id="okBtn" layoutX="150.0" layoutY="156.0" mnemonicParsing="false" onAction="#onOkBtnClick" text="Ok" />
+      <TextField fx:id="tfName" layoutX="119.0" layoutY="100.0" prefHeight="26.0" prefWidth="94.0" onAction="#switchToScene2" promptText="Enter your name" />
+      <Button fx:id="okBtn" layoutX="150.0" layoutY="156.0" mnemonicParsing="false" text="Ok" />
    </children>
 </AnchorPane>

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 
@@ -23,9 +24,19 @@ public class Controller {
     public void setMainWindow(Stage mainWindow) {
         this.mainWindow = mainWindow;
     }
+
+    public void initialize() {
+        okBtn.setOnAction(e -> switchToScene2());
+
+        okBtn.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+
+            }
+        });
+    }
     
     @FXML
-    void onOkBtnClick(ActionEvent event) {
+    private void switchToScene2() {
         try {
             String userName = tfName.getText().trim();
             

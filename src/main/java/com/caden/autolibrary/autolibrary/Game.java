@@ -21,7 +21,8 @@ public String getDate() {
 }
 
 public boolean setReleaseDate(String releaseDate) {
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+	//Formats the release date so it is in US Format, and sets release date as the releaseDate string.
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
     try {
     	LocalDate.parse(releaseDate, formatter);
     	this.releaseDate = releaseDate;

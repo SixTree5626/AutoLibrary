@@ -22,6 +22,9 @@ public class WebScraper {
     private static ArrayList<Game> gameLibrary;
 
     public GameInfo Scrape(String title) {
+        /*tells the scraper what link to scrape, in this case wikipedia.
+        The title variable determines the exact page to scrape
+         */
         String url = "https://en.wikipedia.org/wiki/" + title;
         String developer = "";
         String genre = "";
@@ -75,11 +78,12 @@ public class WebScraper {
             System.out.println("Genre: " + genre);
             System.out.println("Release Date: " + releaseDate);
         } catch (IOException e) {
+            //If the title input doesn't lead to a page, it returns null
             System.out.println("Couldn't find wikipedia article. Enter the details manually.");
             return null;
 
         }
-
+        //returns a Gameinfo instance of the developer, genre, and the releaseDate to be put into the library
         return new GameInfo(developer, genre, releaseDate);
     }
 }
