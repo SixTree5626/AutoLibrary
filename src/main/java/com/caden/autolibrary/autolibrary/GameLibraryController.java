@@ -148,7 +148,7 @@ public class GameLibraryController {
 
 
                 Scene scene = new Scene(root, 371, 186);
-                scene.getStylesheets().add(getClass().getResource("stylingForScene3.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("stylingForScene4.css").toExternalForm());
                 popupStage.setScene(scene);
                 popupStage.setTitle("Game Not Found");
                 popupStage.showAndWait();

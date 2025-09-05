@@ -26,3 +26,8 @@
 	-fx-text-fill: #136B15;
 	-fx-alignment: center;
 }
+.text-field {
+	-fx-background-color: #111111;
+	-fx-font-family:'Comic Sans MS';
+	-fx-text-fill: #136B15;
+}
