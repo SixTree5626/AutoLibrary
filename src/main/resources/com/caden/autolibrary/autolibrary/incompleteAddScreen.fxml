@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.caden.autolibrary.autolibrary.IncompleteAddScreenController">
+   <children>
+      <Label layoutX="100.0" layoutY="14.0" prefHeight="106.0" prefWidth="172.0" text="We couldn't find your game. Would you like to add it manually?" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="yesButton" layoutX="28.0" layoutY="120.0" mnemonicParsing="false" onAction="#onYesButtonClick" text="Yes, that was intentional" />
+      <Button fx:id="noButton" layoutX="218.0" layoutY="120.0" mnemonicParsing="false" onAction="#onNoButtonClick" text="No, it was a typo." />
+   </children>
+</AnchorPane>

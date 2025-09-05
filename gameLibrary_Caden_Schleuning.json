@@ -156,12 +156,6 @@
     "developer": "Game Freak"
   },
   {
-    "releaseDate": "August 1, 1992",
-    "title": "Mortal Kombat (1992)",
-    "genre": "Fighting",
-    "developer": "Midway"
-  },
-  {
     "releaseDate": "November 7, 2006",
     "title": "Guitar Hero II",
     "genre": "Rhythm",
@@ -202,5 +196,11 @@
     "title": "Guitar Hero Warriors of Rock",
     "genre": "Rhythm",
     "developer": "Neversoft"
+  },
+  {
+    "releaseDate": "August 15, 1992",
+    "title": "Mortal Kombat 1992",
+    "genre": "Fighting",
+    "developer": "Midway"
   }
 ]

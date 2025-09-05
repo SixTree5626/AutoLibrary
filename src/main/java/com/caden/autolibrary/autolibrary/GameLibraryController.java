@@ -37,7 +37,6 @@ public class GameLibraryController {
     private Button yesBtn;
 
 
-
     private Stage mainWindow;
     private String userName;
     private String fileName;
@@ -65,10 +64,10 @@ public class GameLibraryController {
         } else {
             for (Game g : gameLibrary) {
                 sb.append("Title: ").append(g.getTitle())
-                  .append("\nDeveloper: ").append(g.getDeveloper())
-                  .append("\nGenre: ").append(g.getGenre())
-                  .append("\nRelease Date: ").append(g.getDate())
-                  .append("\n\n");
+                        .append("\nDeveloper: ").append(g.getDeveloper())
+                        .append("\nGenre: ").append(g.getGenre())
+                        .append("\nRelease Date: ").append(g.getDate())
+                        .append("\n\n");
             }
         }
         libraryDisplay.setText(sb.toString());
@@ -93,10 +92,11 @@ public class GameLibraryController {
         System.out.println("GameLibraryController: Attempting to load library from " + fileName); // Debug print
         try (Reader reader = new FileReader(fileName)) {
             Gson gson = buildGson();
-            ArrayList<Game> list = gson.fromJson(reader, new TypeToken<ArrayList<Game>>(){}.getType());
+            ArrayList<Game> list = gson.fromJson(reader, new TypeToken<ArrayList<Game>>() {
+            }.getType());
             System.out.println("GameLibraryController: Library loaded successfully."); // Debug print
             return (list != null) ? list : new ArrayList<>();
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("GameLibraryController: No existing library found for " + fileName + ". Starting with an empty library.");
             return new ArrayList<>();
         } catch (Exception e) {
@@ -108,26 +108,27 @@ public class GameLibraryController {
 
     private Gson buildGson() {
         return new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, new TypeAdapter<LocalDate>() {
-                @Override
-                public void write(JsonWriter out, LocalDate value) throws IOException {
-                    if (value == null) {
-                        out.nullValue();
-                    } else {
-                        out.value(value.toString());
+                .registerTypeAdapter(LocalDate.class, new TypeAdapter<LocalDate>() {
+                    @Override
+                    public void write(JsonWriter out, LocalDate value) throws IOException {
+                        if (value == null) {
+                            out.nullValue();
+                        } else {
+                            out.value(value.toString());
+                        }
                     }
-                }
-                @Override
-                public LocalDate read(JsonReader in) throws IOException {
-                    if (in.peek() == com.google.gson.stream.JsonToken.NULL) {
-                        in.nextNull();
-                        return null;
+
+                    @Override
+                    public LocalDate read(JsonReader in) throws IOException {
+                        if (in.peek() == com.google.gson.stream.JsonToken.NULL) {
+                            in.nextNull();
+                            return null;
+                        }
+                        return LocalDate.parse(in.nextString());
                     }
-                    return LocalDate.parse(in.nextString());
-                }
-            })
-            .setPrettyPrinting()
-            .create();
+                })
+                .setPrettyPrinting()
+                .create();
     }
 
     private boolean addCurrentGame() {
@@ -136,20 +137,27 @@ public class GameLibraryController {
         GameInfo info = scraper.Scrape(title);
 
         if (info == null) {
-            try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameDatabase3.fxml"));
+            try {
+                Stage popupStage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("incompleteAddScreen.fxml"));
                 Parent root = loader.load();
 
-                GameDatabaseController gamedatabasecontroller = loader.getController();
-                gamedatabasecontroller.setMainWindow(mainWindow);
-                gamedatabasecontroller.setUserName(userName);
-                gamedatabasecontroller.setGameLibrary(gameLibrary);
+                IncompleteAddScreenController controller = loader.getController();
+                controller.setMainWindow(mainWindow);
+                controller.setPopupStage(popupStage);
 
-                Scene scene = new Scene(root, 600, 400);
+
+                Scene scene = new Scene(root, 371, 186);
                 scene.getStylesheets().add(getClass().getResource("stylingForScene3.css").toExternalForm());
-                mainWindow.setScene(scene);
-                mainWindow.setTitle("Add New Game");
-            }catch (IOException e) {
+                popupStage.setScene(scene);
+                popupStage.setTitle("Game Not Found");
+                popupStage.showAndWait();
+
+                if (controller.wasYesClicked()) {
+                    loadGameDatabase3Screen();
+                }
+                return false;
+            } catch (IOException e) {
                 System.err.println("Failed to load the manual input screen: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -166,7 +174,7 @@ public class GameLibraryController {
 
         boolean validDate = false;
 
-        if(info.getReleaseDate() != null && !info.getReleaseDate().isEmpty()) {
+        if (info.getReleaseDate() != null && !info.getReleaseDate().isEmpty()) {
             validDate = game.setReleaseDate(info.getReleaseDate());
             if (!validDate) {
                 System.out.println("Scraped release date format invalid. Please enter manually.");
@@ -182,6 +190,27 @@ public class GameLibraryController {
 
 
     }
+
+    private void loadGameDatabase3Screen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameDatabase3.fxml"));
+            Parent root = loader.load();
+
+            GameDatabaseController controller = loader.getController();
+            controller.setMainWindow(mainWindow);
+            controller.setUserName(userName);
+            controller.setGameLibrary(gameLibrary);
+
+            Scene scene = new Scene(root, 600, 400);
+            scene.getStylesheets().add(getClass().getResource("stylingForScene3.css").toExternalForm());
+            mainWindow.setScene(scene);
+            mainWindow.setTitle("Add New Game");
+        } catch (IOException e) {
+            System.err.println("Failed to load manual input screen: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     private void saveLibrary(ArrayList<Game> library, String fileName) {
         try(Writer writer = new FileWriter(fileName)) {
