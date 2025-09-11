@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -133,6 +134,19 @@ public class GameLibraryController {
 
     private boolean addCurrentGame() {
         String title = gameInputField.getText().trim();
+
+        if (title.isEmpty()) {
+            // You can use a more specific alert here if needed
+            showAlert("Input Error", "Please enter a game title.");
+            return false;
+        }
+
+        // Check for duplicates before attempting to scrape
+        if (isGameAlreadyPresent(title)) {
+            showAlert("Duplicate Game", "This game is already in your library!");
+            return false;
+        }
+
         WebScraper scraper = new WebScraper();
         GameInfo info = scraper.Scrape(title);
 
@@ -238,6 +252,23 @@ public class GameLibraryController {
             e.printStackTrace();
             System.err.println("Error loading Game Library Screen:" + e.getMessage());
         }
+    }
+
+    private boolean isGameAlreadyPresent(String title){
+        for (Game game : gameLibrary) {
+            if (game.getTitle().equalsIgnoreCase(title.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 
