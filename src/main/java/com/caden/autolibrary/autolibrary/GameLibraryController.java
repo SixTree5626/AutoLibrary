@@ -34,6 +34,7 @@ public class GameLibraryController {
     @FXML
     private Button noBtn;
 
+
     @FXML
     private Button yesBtn;
 
