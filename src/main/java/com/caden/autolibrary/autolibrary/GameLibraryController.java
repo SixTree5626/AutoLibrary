@@ -49,6 +49,9 @@ public class GameLibraryController {
         System.out.println("GameLibraryController: mainWindow set."); // Debug print
     }
 
+    /* Method that sets the username, as well as the file name, and displays the contents of the JSON library.
+
+     */
     public void setUserName(String userName) {
         this.userName = userName.replaceAll("\\s+", "_");
         this.fileName = "gameLibrary_" + this.userName + ".json";
@@ -57,6 +60,9 @@ public class GameLibraryController {
         displayLibrary();
     }
 
+
+
+    //Method for displaying the library, or if it's empty, saying so.
     public void displayLibrary() {
         StringBuilder sb = new StringBuilder();
         sb.append("Your Game Library:\n\n");
@@ -76,6 +82,7 @@ public class GameLibraryController {
         System.out.println("GameLibraryController: Library displayed."); // Debug print
     }
 
+    //if the yes button is clicked, wikipedia is scraped, and the game is added to the json file.
     @FXML
     void onYesBtnClick(ActionEvent event) {
         if (addCurrentGame()) {
@@ -84,12 +91,14 @@ public class GameLibraryController {
         }
     }
 
+    //if the no button is clicked, the program exits.
     @FXML
     void onNoBtnClick(ActionEvent event) {
         System.out.println("GameLibraryController: 'No' button clicked. Exiting application."); // Debug print
         Platform.exit();
     }
 
+    // Method for loading the library.
     private ArrayList<Game> loadLibrary(String fileName) {
         System.out.println("GameLibraryController: Attempting to load library from " + fileName); // Debug print
         try (Reader reader = new FileReader(fileName)) {
@@ -108,6 +117,7 @@ public class GameLibraryController {
         }
     }
 
+    //method for composing the json file.
     private Gson buildGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new TypeAdapter<LocalDate>() {
@@ -133,6 +143,7 @@ public class GameLibraryController {
                 .create();
     }
 
+    //method for adding the game
     private boolean addCurrentGame() {
         String title = gameInputField.getText().trim();
 
@@ -206,6 +217,7 @@ public class GameLibraryController {
 
     }
 
+    //method for loading the manual entry screen
     private void loadGameDatabase3Screen() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameDatabase3.fxml"));
@@ -227,6 +239,7 @@ public class GameLibraryController {
     }
 
 
+    //method for saving the gson file.
     private void saveLibrary(ArrayList<Game> library, String fileName) {
         try(Writer writer = new FileWriter(fileName)) {
             Gson gson = buildGson();
@@ -236,6 +249,7 @@ public class GameLibraryController {
         }
     }
 
+    //method for showing the library
     private void showLibrary() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));

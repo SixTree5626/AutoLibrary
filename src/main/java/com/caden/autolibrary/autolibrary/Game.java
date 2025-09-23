@@ -9,6 +9,7 @@ String genre;
 String developer;
 
 
+//Properties for the Game Object
 public Game () {
     releaseDate = "";
     title = "";
@@ -16,14 +17,17 @@ public Game () {
     developer = "";
 }
 
+//Gets the release Date
 public String getDate() {
     return releaseDate;
 }
 
+//Sets the release date, if the date is not in the format MMMM d, YYYY, it is invalid.
 public boolean setReleaseDate(String releaseDate) {
 	//Formats the release date so it is in US Format, and sets release date as the releaseDate string.
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
     try {
+        //parses the releaseDate field and formats it.
     	LocalDate.parse(releaseDate, formatter);
     	this.releaseDate = releaseDate;
     	return true;
@@ -58,6 +62,7 @@ public void setDeveloper(String developer) {
     this.developer = developer;
 }
 
+//converts to string
 @Override
 public String toString() {
         return "Title: " + title +

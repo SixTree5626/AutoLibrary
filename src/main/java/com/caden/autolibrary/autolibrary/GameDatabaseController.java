@@ -22,7 +22,12 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * Controller for the game database screen.
+ * Handles manually adding new games to the user's library.
+ */
 public class GameDatabaseController {
+    // FXML annotated fields for UI elements
     @FXML
     private TextField titleField;
     @FXML
@@ -42,20 +47,37 @@ public class GameDatabaseController {
     private String fileName;
     private ArrayList<Game> gameLibrary;
     
+    /**
+     * Sets the main window stage.
+     * @param mainWindow The main stage of the application.
+     */
     public void setMainWindow(Stage mainWindow) {
         this.mainWindow = mainWindow;
     }
     
+    /**
+     * Sets the user name and generates the file name for the game library.
+     * @param userName The user's name.
+     */
     public void setUserName(String userName) {
         this.userName = userName.replaceAll("\\s+", "_");
         this.fileName = "gameLibrary_" + this.userName + ".json";
         
     }
 
+    /**
+     * Sets the game library.
+     * @param gameLibrary The list of games.
+     */
     public void setGameLibrary(ArrayList<Game> gameLibrary) {
         this.gameLibrary = gameLibrary;
     }
     
+    /**
+     * Handles the click event for the "Add" button.
+     * Adds the current game and saves the library.
+     * @param event The action event.
+     */
     @FXML
     void onAddBtnClick(ActionEvent event) {
         if(addCurrentGame()) {
@@ -64,11 +86,21 @@ public class GameDatabaseController {
         }
     }
 
+    /**
+     * Handles the click event for the "Back" button.
+     * Returns to the library view.
+     * @param event The action event.
+     */
     @FXML
     void onBackBtnClick(ActionEvent event) {
         showLibrary();
     }
     
+    /**
+     * Handles the click event for the "No" button.
+     * Adds the current game and then shows the library.
+     * @param event The action event.
+     */
     @FXML
     void onNoBtnClick(ActionEvent event) {
         // Add the current game and then show the library
@@ -79,6 +111,10 @@ public class GameDatabaseController {
     }
 
     
+    /**
+     * Adds the current game to the library based on the input fields.
+     * @return True if the game was added successfully, false otherwise.
+     */
     private boolean addCurrentGame() {
         String title = titleField.getText().trim();
         String developer = developerField.getText().trim();
@@ -118,6 +154,11 @@ public class GameDatabaseController {
     }
 
     
+    /**
+     * Shows an alert dialog with a given title and message.
+     * @param title The title of the alert.
+     * @param message The message to display.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -126,6 +167,9 @@ public class GameDatabaseController {
         alert.showAndWait();
     }
     
+    /**
+     * Shows the game library screen.
+     */
     private void showLibrary() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
@@ -146,6 +190,11 @@ public class GameDatabaseController {
     }
 
     
+    /**
+     * Saves the game library to a JSON file.
+     * @param library The library to save.
+     * @param fileName The name of the file to save to.
+     */
     private void saveLibrary(ArrayList<Game> library, String fileName) {
         try(Writer writer = new FileWriter(fileName)) {
             Gson gson = buildGson();
@@ -155,6 +204,10 @@ public class GameDatabaseController {
         }
     }
     
+    /**
+     * Builds a Gson object with a custom adapter for LocalDate.
+     * @return The configured Gson object.
+     */
     private Gson buildGson() {
         return new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new TypeAdapter<LocalDate>() {
@@ -171,4 +224,3 @@ public class GameDatabaseController {
             .create();
     }
 }
-
