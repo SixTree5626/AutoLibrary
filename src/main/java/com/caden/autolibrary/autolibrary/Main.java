@@ -27,6 +27,7 @@ public class Main extends Application{
         //sets the title
         primaryStage.setTitle("Game Library Login");
         //shows the stage
+        
         primaryStage.show();
     }
 

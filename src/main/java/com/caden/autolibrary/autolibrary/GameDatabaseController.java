@@ -1,11 +1,9 @@
 package com.caden.autolibrary.autolibrary;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert; // Import Alert for messages
 import javafx.stage.Stage;
@@ -36,10 +34,6 @@ public class GameDatabaseController {
     private TextField genreField;
     @FXML
     private TextField releaseDateField;
-    @FXML
-    private Button addBtn;
-    @FXML
-    private Button backBtn;
     
     
     private Stage mainWindow;
@@ -56,7 +50,7 @@ public class GameDatabaseController {
     }
     
     /**
-     * Sets the user name and generates the file name for the game library.
+     * Sets the username and generates the file name for the game library.
      * @param userName The user's name.
      */
     public void setUserName(String userName) {
@@ -76,10 +70,9 @@ public class GameDatabaseController {
     /**
      * Handles the click event for the "Add" button.
      * Adds the current game and saves the library.
-     * @param event The action event.
      */
     @FXML
-    void onAddBtnClick(ActionEvent event) {
+    void onAddBtnClick() {
         if(addCurrentGame()) {
             saveLibrary(gameLibrary, fileName);
             showLibrary();
@@ -89,28 +82,13 @@ public class GameDatabaseController {
     /**
      * Handles the click event for the "Back" button.
      * Returns to the library view.
-     * @param event The action event.
      */
     @FXML
-    void onBackBtnClick(ActionEvent event) {
+    void onBackBtnClick() {
         showLibrary();
     }
-    
-    /**
-     * Handles the click event for the "No" button.
-     * Adds the current game and then shows the library.
-     * @param event The action event.
-     */
-    @FXML
-    void onNoBtnClick(ActionEvent event) {
-        // Add the current game and then show the library
-        if (addCurrentGame()) {
-            saveLibrary(gameLibrary, fileName);
-            showLibrary();
-        }
-    }
 
-    
+
     /**
      * Adds the current game to the library based on the input fields.
      * @return True if the game was added successfully, false otherwise.
@@ -134,15 +112,10 @@ public class GameDatabaseController {
         game.setTitle(title);
         game.setDeveloper(developer);
         game.setGenre(genre);
-        boolean validDate = false;
-        while (!validDate) {
-        	System.out.println("Release Date (format: MMMM d, yyyy, e.g., November 15, 2024):");
-            String dateInput = dateText;
-            validDate = game.setReleaseDate(dateInput);
-            if (!validDate) {
-                showAlert("Error", "Please Fill in date with correct format");
-                return false;
-            }
+
+        if (!game.setReleaseDate(dateText)) {
+            showAlert("Error", "Please fill in the date with the correct format (e.g., November 15, 2024).");
+            return false;
         }
         
         gameLibrary.add(game);
