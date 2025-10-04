@@ -169,7 +169,7 @@ public class GameLibraryController {
                 Parent root = loader.load();
 
                 IncompleteAddScreenController controller = loader.getController();
-                controller.setMainWindow(mainWindow);
+                controller.setMainWindow();
                 controller.setPopupStage(popupStage);
 
 

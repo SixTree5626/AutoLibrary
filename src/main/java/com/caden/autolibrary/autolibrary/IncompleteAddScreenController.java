@@ -2,21 +2,15 @@ package com.caden.autolibrary.autolibrary;
 
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+
 
 public class IncompleteAddScreenController {
-    private Stage mainWindow;
     private Stage popupStage;
     private boolean yesClicked = false;
 
-    @FXML
-    private Button yesButton;
 
-    @FXML
-    private Button noButton;
     //sets the Stage to the mainWindow stage.
-    public void setMainWindow(Stage mainWindow) {
-        this.mainWindow = mainWindow;
+    public void setMainWindow() {
     }
 
     //shows the second popup window for when there is an error in the scraping process.

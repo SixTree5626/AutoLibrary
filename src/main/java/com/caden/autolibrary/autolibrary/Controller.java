@@ -7,39 +7,41 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 
-import java.io.IOException;
+import java.io.IOException; // Represents an I/O error.
+import java.net.URL; // Represents a Uniform Resource Locator.
+import java.util.Objects; // Utility class for operating on objects.
 
 
 public class Controller {
+    private static final double INITIAL_SCENE_WIDTH = 600;
+    private static final double INITIAL_SCENE_HEIGHT = 500;
     @FXML
     private Button okBtn;
     @FXML
     private TextField tfName;
     private Stage mainWindow;
-
-    //method for setting the stage
+    
     public void setMainWindow(Stage mainWindow) {
         this.mainWindow = mainWindow;
     }
 
-    //method for settings the stage
+    // This method is called by the FXMLLoader when initialization is complete
     public void initialize() {
-        //when the okBtn is clicked, switch to the scene showing the game library
-        okBtn.setOnAction(e -> switchToScene2());
+        // Make the button the default, so it can be triggered by Enter.
+        okBtn.setDefaultButton(true);
+        // Trigger the action on button click.
+        okBtn.setOnAction(_ -> switchToScene2()); // Can be replaced with this::switchToScene2
 
-        //when the enter key is clicked, switch to the scene showing the game library
-        okBtn.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-
-            }
-        });
+        // Also trigger the action when Enter is pressed in the text field.
+        tfName.setOnAction(_ -> switchToScene2()); // Can be replaced with this::switchToScene2
     }
 
-        //method for switching to scene 2.
+    /**
+     * Switches the primary stage to the Game Library scene.
+     */
     @FXML
     private void switchToScene2() {
         try {
@@ -48,32 +50,42 @@ public class Controller {
 
             //if the field is empty, show an alert saying that it is empty.
             if (userName.isEmpty()) {
-                showAlert("Input Error", "Please enter your name.");// You might want to show an error message here
+                showAlert("Input Error", "Please enter your name.");
                 return;
             }
 
             //Loads FXML for the Game Library scene.
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
+            URL fxmlLocation = getResource("GameLibrary3.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
             
             // Pass the username to the next controller
             GameLibraryController gameLibraryController = loader.getController();
             gameLibraryController.setMainWindow(mainWindow);
             gameLibraryController.setUserName(userName);
-            
 
             // Sets the scene, along with its CSS styling.
-            Scene scene = new Scene(root, 600, 500);
-            scene.getStylesheets().add(getClass().getResource("stylingForScene2.css").toExternalForm());
+            Scene scene = new Scene(root, INITIAL_SCENE_WIDTH, INITIAL_SCENE_HEIGHT);
+            URL cssLocation = getResource("stylingForScene2.css");
+            scene.getStylesheets().add(cssLocation.toExternalForm());
+
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "could not load the game Library screen."); 
+        } catch (IOException | IllegalStateException ignored) {
+            showAlert("Error", "Could not load the game library screen.");
         }
     }
 
-    //method for showing alerts
+    private URL getResource(String resourceName) {
+        URL resourceUrl = getClass().getResource(resourceName);
+        return Objects.requireNonNull(resourceUrl, "Application resource not found: " + resourceName);
+    }
+
+    /**
+     * Displays an error alert dialog.
+     * @param title The title of the alert window.
+     * @param message The content message to display.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

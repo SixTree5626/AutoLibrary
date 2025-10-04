@@ -13,6 +13,7 @@ import java.io.Writer;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -101,7 +102,7 @@ public class GameDatabaseController {
         
         // Validate inputs
         if (title.isEmpty() || developer.isEmpty() || genre.isEmpty() || dateText.isEmpty()) {
-            showAlert("Error", "Please fill in all fields.");
+            showAlert("Please fill in all fields.");
             return false;
         }
         
@@ -114,7 +115,7 @@ public class GameDatabaseController {
         game.setGenre(genre);
 
         if (!game.setReleaseDate(dateText)) {
-            showAlert("Error", "Please fill in the date with the correct format (e.g., November 15, 2024).");
+            showAlert("Please fill in the date with the correct format (e.g., November 15, 2024).");
             return false;
         }
         
@@ -129,12 +130,12 @@ public class GameDatabaseController {
     
     /**
      * Shows an alert dialog with a given title and message.
-     * @param title The title of the alert.
+     *
      * @param message The message to display.
      */
-    private void showAlert(String title, String message) {
+    private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
@@ -153,7 +154,7 @@ public class GameDatabaseController {
             gameLibraryController.setUserName(userName);
             
             Scene scene = new Scene(root, 600, 500);
-            scene.getStylesheets().add(getClass().getResource("stylingForScene2.css").toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene2.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
         } catch (Exception e) {
