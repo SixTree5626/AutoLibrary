@@ -33,10 +33,10 @@ public class Controller {
         // Make the button the default, so it can be triggered by Enter.
         okBtn.setDefaultButton(true);
         // Trigger the action on button click.
-        okBtn.setOnAction(_ -> switchToScene2()); // Can be replaced with this::switchToScene2
+        okBtn.setOnAction(_ -> switchToScene2());
 
         // Also trigger the action when Enter is pressed in the text field.
-        tfName.setOnAction(_ -> switchToScene2()); // Can be replaced with this::switchToScene2
+        tfName.setOnAction(_ -> switchToScene2());
     }
 
     /**

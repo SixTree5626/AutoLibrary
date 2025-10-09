@@ -1,15 +1,11 @@
 package com.caden.autolibrary.autolibrary;
-
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
  * A web scraper designed to extract video game information from Wikipedia.
  * It fetches details like the developer, genre, and release date for a given game title.
@@ -20,7 +16,6 @@ public class WebScraper {
     private static javafx.stage.Stage mainWindow;
     private static String userName;
     private static ArrayList<Game> gameLibrary;
-
     /**
      * Scrapes a Wikipedia article for a given game title to find its developer, genre, and release date.
      *
@@ -35,14 +30,11 @@ public class WebScraper {
         String developer = "";
         String genre = "";
         String releaseDate = "";
-
         try {
-            
             // Connect to the URL and parse the HTML document.
             Document doc = Jsoup.connect(url).get();
             // Select the main "infobox" table which contains summary data.
             Element infobox = doc.selectFirst("table.infobox");
-
             if (infobox != null) {
                 // Loop through all table rows in the infobox to find the developer and genre.
                 for (Element row : infobox.select("tr")) {
@@ -62,7 +54,6 @@ public class WebScraper {
                         }
                     }
                 }
-
                 // Loop through the rows again to find the release date.
                 // A separate loop is used to ensure we can break after finding the first valid date.
                 for (Element row : infobox.select("tr")) {
@@ -85,7 +76,6 @@ public class WebScraper {
                     }
                 }
             }
-
             System.out.println("Developer: " + developer);
             System.out.println("Genre: " + genre);
             System.out.println("Release Date: " + releaseDate);
@@ -93,7 +83,6 @@ public class WebScraper {
             // If Jsoup fails to connect (e.g., 404 Not Found), inform the user and return null.
             System.out.println("Couldn't find wikipedia article. Enter the details manually.");
             return null;
-
         }
         // Return a new GameInfo object populated with the scraped data.
         return new GameInfo(developer, genre, releaseDate);

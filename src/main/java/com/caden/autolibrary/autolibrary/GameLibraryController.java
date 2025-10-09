@@ -27,31 +27,22 @@ import java.time.LocalDate;
 public class GameLibraryController {
     @FXML
     private TextArea libraryDisplay;
-
     @FXML
     private TextField gameInputField;
-
     @FXML
     private Button noBtn;
-
-
     @FXML
     private Button yesBtn;
-
-
     private Stage mainWindow;
     private String userName;
     private String fileName;
     private ArrayList<Game> gameLibrary;
-
+    //method for setting the stage
     public void setMainWindow(Stage mainWindow) {
         this.mainWindow = mainWindow;
         System.out.println("GameLibraryController: mainWindow set."); // Debug print
     }
-
-    /* Method that sets the username, as well as the file name, and displays the contents of the JSON library.
-
-     */
+    // Method that sets the username, as well as the file name, and displays the contents of the JSON library.
     public void setUserName(String userName) {
         this.userName = userName.replaceAll("\\s+", "_");
         this.fileName = "gameLibrary_" + this.userName + ".json";
@@ -59,9 +50,6 @@ public class GameLibraryController {
         this.gameLibrary = loadLibrary(fileName);
         displayLibrary();
     }
-
-
-
     //Method for displaying the library, or if it's empty, saying so.
     public void displayLibrary() {
         StringBuilder sb = new StringBuilder();
@@ -81,7 +69,6 @@ public class GameLibraryController {
         libraryDisplay.setText(sb.toString());
         System.out.println("GameLibraryController: Library displayed."); // Debug print
     }
-
     //if the yes button is clicked, wikipedia is scraped, and the game is added to the json file.
     @FXML
     void onYesBtnClick(ActionEvent event) {
@@ -90,14 +77,12 @@ public class GameLibraryController {
             showLibrary();
         }
     }
-
     //if the no button is clicked, the program exits.
     @FXML
     void onNoBtnClick(ActionEvent event) {
         System.out.println("GameLibraryController: 'No' button clicked. Exiting application."); // Debug print
         Platform.exit();
     }
-
     // Method for loading the library.
     private ArrayList<Game> loadLibrary(String fileName) {
         System.out.println("GameLibraryController: Attempting to load library from " + fileName); // Debug print
@@ -116,7 +101,6 @@ public class GameLibraryController {
             return new ArrayList<>();
         }
     }
-
     //method for composing the json file.
     private Gson buildGson() {
         return new GsonBuilder()
@@ -129,7 +113,6 @@ public class GameLibraryController {
                             out.value(value.toString());
                         }
                     }
-
                     @Override
                     public LocalDate read(JsonReader in) throws IOException {
                         if (in.peek() == com.google.gson.stream.JsonToken.NULL) {
@@ -142,26 +125,22 @@ public class GameLibraryController {
                 .setPrettyPrinting()
                 .create();
     }
-
     //method for adding the game
     private boolean addCurrentGame() {
         String title = gameInputField.getText().trim();
-
+        //if the title field is not filled in, show an alert telling the user to fill it in.
         if (title.isEmpty()) {
             // You can use a more specific alert here if needed
             showAlert("Input Error", "Please enter a game title.");
             return false;
         }
-
         // Check for duplicates before attempting to scrape
         if (isGameAlreadyPresent(title)) {
             showAlert("Duplicate Game", "This game is already in your library!");
             return false;
         }
-
         WebScraper scraper = new WebScraper();
         GameInfo info = scraper.Scrape(title);
-
         if (info == null) {
             try {
                 Stage popupStage = new Stage();
@@ -171,14 +150,14 @@ public class GameLibraryController {
                 IncompleteAddScreenController controller = loader.getController();
                 controller.setMainWindow();
                 controller.setPopupStage(popupStage);
-
-
+                //Sets a new scene
                 Scene scene = new Scene(root, 371, 186);
                 scene.getStylesheets().add(getClass().getResource("stylingForScene4.css").toExternalForm());
                 popupStage.setScene(scene);
                 popupStage.setTitle("Game Not Found");
                 popupStage.showAndWait();
-
+                //if the button for confirming a manual game addition was clicked, go to the manual
+                //add screen.
                 if (controller.wasYesClicked()) {
                     loadGameDatabase3Screen();
                 }
@@ -188,10 +167,8 @@ public class GameLibraryController {
                 e.printStackTrace();
             }
             return false;
-
         }
-
-
+        // Creates a game object and assigns it its properties.
         Game game = new Game();
         game.setTitle(title);
         game.setDeveloper(info.getDeveloper());
@@ -199,24 +176,19 @@ public class GameLibraryController {
         game.setGenre(info.getGenre());
 
         boolean validDate = false;
-
+        //if the release date field is not empty, the date property for the game object is set to whatever was scraped.
         if (info.getReleaseDate() != null && !info.getReleaseDate().isEmpty()) {
             validDate = game.setReleaseDate(info.getReleaseDate());
+            //if the date was not in a valid format, print out to the console.
             if (!validDate) {
                 System.out.println("Scraped release date format invalid. Please enter manually.");
             }
         }
-
         // Add the new game to the library
         gameLibrary.add(game);
-
         saveLibrary(gameLibrary, fileName);
-
         return true;
-
-
     }
-
     //method for loading the manual entry screen
     private void loadGameDatabase3Screen() {
         try {
@@ -237,8 +209,6 @@ public class GameLibraryController {
             e.printStackTrace();
         }
     }
-
-
     //method for saving the gson file.
     private void saveLibrary(ArrayList<Game> library, String fileName) {
         try(Writer writer = new FileWriter(fileName)) {
@@ -248,17 +218,14 @@ public class GameLibraryController {
             System.out.println("Could not save library: " + e.getMessage());
         }
     }
-
     //method for showing the library
     private void showLibrary() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
             Parent root = loader.load();
-
             GameLibraryController gameLibraryController = loader.getController();
             gameLibraryController.setMainWindow(mainWindow);
             gameLibraryController.setUserName(userName);
-
             Scene scene = new Scene(root, 600, 500);
             scene.getStylesheets().add(getClass().getResource("stylingForScene2.css").toExternalForm());
             mainWindow.setScene(scene);
@@ -285,7 +252,4 @@ public class GameLibraryController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-
 }

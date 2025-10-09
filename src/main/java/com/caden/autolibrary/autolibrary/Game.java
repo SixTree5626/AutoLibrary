@@ -7,8 +7,6 @@ String releaseDate;
 String title;
 String genre;
 String developer;
-
-
 //Properties for the Game Object
 public Game () {
     releaseDate = "";
@@ -16,7 +14,6 @@ public Game () {
     genre = "";
     developer = "";
 }
-
 //Gets the release Date
 public String getDate() {
     return releaseDate;
@@ -33,35 +30,26 @@ public boolean setReleaseDate(String releaseDate) {
     	return true;
     }catch (Exception e) {
     	return false;
-    	
     }
-} 
-
-
+}
 public String getTitle() {
     return title;
 }
-
 public void setTitle(String title) {
     this.title = title;
 }
-
 public String getGenre() {
     return genre;
 }
-
 public void setGenre(String genre) {
     this.genre = genre;
 }
-
 public String getDeveloper() {
     return developer;
 }
-
 public void setDeveloper(String developer) {
     this.developer = developer;
 }
-
 //converts to string
 @Override
 public String toString() {
@@ -70,9 +58,4 @@ public String toString() {
                ", Genre: " + genre +
                ", Release Date: " + (releaseDate != null ? releaseDate.toString() : "N/A");
     }
-   
-
-
-
-
 }
