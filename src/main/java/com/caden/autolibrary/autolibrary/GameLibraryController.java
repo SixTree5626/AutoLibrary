@@ -185,7 +185,7 @@ public class GameLibraryController {
             }
         }
         // Add the new game to the library
-        gameLibrary.add(game);
+        gameLibrary.add(0, game);
         saveLibrary(gameLibrary, fileName);
         return true;
     }
