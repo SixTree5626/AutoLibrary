@@ -4,6 +4,7 @@ module com.caden.autolibrary.autolibrary {
     requires com.google.gson;
     requires javafx.graphics;
     requires org.jsoup;
+    requires java.logging;
 
 
     opens com.caden.autolibrary.autolibrary to javafx.fxml, com.google.gson, org.jsoup;

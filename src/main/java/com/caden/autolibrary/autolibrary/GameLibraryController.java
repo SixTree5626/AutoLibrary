@@ -2,19 +2,20 @@ package com.caden.autolibrary.autolibrary;
 
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,13 +30,10 @@ public class GameLibraryController {
     private TextArea libraryDisplay;
     @FXML
     private TextField gameInputField;
-    @FXML
-    private Button noBtn;
-    @FXML
-    private Button yesBtn;
     private Stage mainWindow;
     private String userName;
     private String fileName;
+    private static final Logger logger = Logger.getLogger(GameLibraryController.class.getName());
     private ArrayList<Game> gameLibrary;
     //method for setting the stage
     public void setMainWindow(Stage mainWindow) {
@@ -71,7 +69,7 @@ public class GameLibraryController {
     }
     //if the yes button is clicked, wikipedia is scraped, and the game is added to the json file.
     @FXML
-    void onYesBtnClick(ActionEvent event) {
+    void onYesBtnClick() {
         if (addCurrentGame()) {
             saveLibrary(gameLibrary, fileName);
             showLibrary();
@@ -79,7 +77,7 @@ public class GameLibraryController {
     }
     //if the no button is clicked, the program exits.
     @FXML
-    void onNoBtnClick(ActionEvent event) {
+    void onNoBtnClick() {
         System.out.println("GameLibraryController: 'No' button clicked. Exiting application."); // Debug print
         Platform.exit();
     }
@@ -97,7 +95,7 @@ public class GameLibraryController {
             return new ArrayList<>();
         } catch (Exception e) {
             System.err.println("GameLibraryController: Error loading library from " + fileName + ": " + e.getMessage());
-            e.printStackTrace(); // Print full stack trace for other exceptions
+            logger.log(Level.SEVERE, "Error loading library", e); // Print full stack trace for other exceptions
             return new ArrayList<>();
         }
     }
@@ -152,7 +150,7 @@ public class GameLibraryController {
                 controller.setPopupStage(popupStage);
                 //Sets a new scene
                 Scene scene = new Scene(root, 371, 186);
-                scene.getStylesheets().add(getClass().getResource("stylingForScene4.css").toExternalForm());
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene4.css")).toExternalForm());
                 popupStage.setScene(scene);
                 popupStage.setTitle("Game Not Found");
                 popupStage.showAndWait();
@@ -164,28 +162,28 @@ public class GameLibraryController {
                 return false;
             } catch (IOException e) {
                 System.err.println("Failed to load the manual input screen: " + e.getMessage());
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Failed to load the manual input screen", e);
             }
             return false;
         }
         // Creates a game object and assigns it its properties.
         Game game = new Game();
         game.setTitle(title);
-        game.setDeveloper(info.getDeveloper());
-        game.setDeveloper(info.getDeveloper());
-        game.setGenre(info.getGenre());
+        game.setDeveloper(info.developer());
+        game.setDeveloper(info.developer());
+        game.setGenre(info.genre());
 
-        boolean validDate = false;
+        boolean validDate;
         //if the release date field is not empty, the date property for the game object is set to whatever was scraped.
-        if (info.getReleaseDate() != null && !info.getReleaseDate().isEmpty()) {
-            validDate = game.setReleaseDate(info.getReleaseDate());
+        if (info.releaseDate() != null && !info.releaseDate().isEmpty()) {
+            validDate = game.setReleaseDate(info.releaseDate());
             //if the date was not in a valid format, print out to the console.
             if (!validDate) {
                 System.out.println("Scraped release date format invalid. Please enter manually.");
             }
         }
         // Add the new game to the library
-        gameLibrary.add(0, game);
+        gameLibrary.addFirst(game);
         saveLibrary(gameLibrary, fileName);
         return true;
     }
@@ -201,12 +199,12 @@ public class GameLibraryController {
             controller.setGameLibrary(gameLibrary);
 
             Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(getClass().getResource("stylingForScene3.css").toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene3.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle("Add New Game");
         } catch (IOException e) {
             System.err.println("Failed to load manual input screen: " + e.getMessage());
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Failed to load manual input screen", e);
         }
     }
     //method for saving the gson file.
@@ -227,11 +225,11 @@ public class GameLibraryController {
             gameLibraryController.setMainWindow(mainWindow);
             gameLibraryController.setUserName(userName);
             Scene scene = new Scene(root, 600, 500);
-            scene.getStylesheets().add(getClass().getResource("stylingForScene2.css").toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene2.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error occurred: " + e.getMessage(), e);
             System.err.println("Error loading Game Library Screen:" + e.getMessage());
         }
     }

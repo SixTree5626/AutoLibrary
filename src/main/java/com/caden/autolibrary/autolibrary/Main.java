@@ -1,6 +1,7 @@
 package com.caden.autolibrary.autolibrary;
 
 import javafx.application.Application;
+import java.util.Objects;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,7 +22,7 @@ public class Main extends Application{
         //Creates a scene object, and gives it properties
         Scene scene1 = new Scene(root, 333, 226);
         //gets the css styling to use for this scene
-        scene1.getStylesheets().add(getClass().getResource("stylingForScene1.css").toExternalForm());
+        scene1.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene1.css")).toExternalForm());
         //sets the scene on the primary stage
         primaryStage.setScene(scene1);
         //sets the title

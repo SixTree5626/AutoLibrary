@@ -56,6 +56,6 @@ public String toString() {
         return "Title: " + title +
                ", Developer: " + developer +
                ", Genre: " + genre +
-               ", Release Date: " + (releaseDate != null ? releaseDate.toString() : "N/A");
+               ", Release Date: " + (releaseDate != null ? releaseDate : "N/A");
     }
 }

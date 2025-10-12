@@ -14,6 +14,8 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,6 +43,8 @@ public class GameDatabaseController {
     private String userName;
     private String fileName;
     private ArrayList<Game> gameLibrary;
+
+    private static final Logger logger = Logger.getLogger(GameDatabaseController.class.getName());
     
     /**
      * Sets the main window stage.
@@ -158,7 +162,7 @@ public class GameDatabaseController {
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error occurred: " + e.getMessage(), e);
             System.err.println("Error loading Game Library Screen:" + e.getMessage());
         }
     }
