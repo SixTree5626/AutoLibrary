@@ -60,7 +60,7 @@ public class GameLibraryController {
                 sb.append("Title: ").append(g.getTitle())
                         .append("\nDeveloper: ").append(g.getDeveloper())
                         .append("\nGenre: ").append(g.getGenre())
-                        .append("\nRelease Date: ").append(g.getDate())
+                        .append("\nRelease Date: ").append(g.getReleaseDate())
                         .append("\n\n");
             }
         }
@@ -138,7 +138,7 @@ public class GameLibraryController {
             return false;
         }
         WebScraper scraper = new WebScraper();
-        GameInfo info = scraper.Scrape(title);
+        GameInfo info = scraper.scrape(title);
         if (info == null) {
             try {
                 Stage popupStage = new Stage();

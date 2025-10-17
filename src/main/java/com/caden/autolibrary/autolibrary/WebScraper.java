@@ -22,7 +22,7 @@ public class WebScraper {
     ///              (e.g., "Chrono_Trigger" for "[...](https://en.wikipedia.org/wiki/Chrono_Trigger)")
     /// @return A [GameInfo] object containing the scraped information. Returns `null` if the
     ///         Wikipedia page cannot be found or an error occurs during scraping.
-    public GameInfo Scrape(String title) {
+    public GameInfo scrape(String title) {
         // Construct the URL for the Wikipedia page based on the game title.
         String url = "https://en.wikipedia.org/wiki/" + title;
         String developer = "";
