@@ -3,7 +3,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
@@ -13,9 +12,6 @@ import java.util.regex.Pattern;
 public class WebScraper {
     // Note: These static fields are not used within this class.
     // They might be intended for use by other parts of the application.
-    private static javafx.stage.Stage mainWindow;
-    private static String userName;
-    private static ArrayList<Game> gameLibrary;
     /// Scrapes a Wikipedia article for a given game title to find its developer, genre, and release date.
     ///
     /// @param title The title of the game, which will be used to construct the Wikipedia URL.
@@ -46,7 +42,7 @@ public class WebScraper {
                         if (label.contains("developer")) {
                             developer = data.text();
                             // Use regex to remove citation brackets (e.g., "[1]", "[a]") from the text.
-                            developer = developer.replaceAll("\\[[a-zA-Z0-9]+\\]", "");
+                            developer = developer.replaceAll("\\[[a-zA-Z0-9]+]", "");
                         } else if (label.contains("genre")) {
                             genre = data.text();
                         }
