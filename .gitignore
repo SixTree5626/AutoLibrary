@@ -15,6 +15,7 @@ target/
 .idea/encodings.xml
 .idea/misc.xml
 .idea/vcs.xml
+.idea/dbnavigator.xml
 *.iws
 *.iml
 *.ipr
