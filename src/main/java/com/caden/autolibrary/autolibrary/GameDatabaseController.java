@@ -150,7 +150,7 @@ public class GameDatabaseController {
      */
     private void showLibrary() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/GameLibrary3.fxml"));
             Parent root = loader.load();
             
             GameLibraryController gameLibraryController = loader.getController();
@@ -158,7 +158,7 @@ public class GameDatabaseController {
             gameLibraryController.setUserName(userName);
             
             Scene scene = new Scene(root, 600, 500);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene2.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/stylingForScene2.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
         } catch (Exception e) {

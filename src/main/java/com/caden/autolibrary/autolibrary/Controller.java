@@ -55,7 +55,7 @@ public class Controller {
             }
 
             //Loads FXML for the Game Library scene.
-            URL fxmlLocation = getResource("GameLibrary3.fxml");
+            URL fxmlLocation = getResource("fxml/GameLibrary3.fxml");
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
             
@@ -66,7 +66,7 @@ public class Controller {
 
             // Sets the scene, along with its CSS styling.
             Scene scene = new Scene(root, INITIAL_SCENE_WIDTH, INITIAL_SCENE_HEIGHT);
-            URL cssLocation = getResource("stylingForScene2.css");
+            URL cssLocation = getResource("css/stylingForScene2.css");
             scene.getStylesheets().add(cssLocation.toExternalForm());
 
             mainWindow.setScene(scene);

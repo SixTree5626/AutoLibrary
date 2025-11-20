@@ -12,7 +12,7 @@ public class Main extends Application{
     @Override
     public void start (Stage primaryStage) throws Exception {
         //loads FXML scene to show on the Stage.
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameDatabaseNameScreen3.fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("fxml/GameDatabaseNameScreen3.fxml"));
         //root node
         Parent root = loader.load();
         //loads the controller tied to the fxml file.
@@ -22,7 +22,7 @@ public class Main extends Application{
         //Creates a scene object, and gives it properties
         Scene scene1 = new Scene(root, 333, 226);
         //gets the css styling to use for this scene
-        scene1.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene1.css")).toExternalForm());
+        scene1.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/stylingForScene1.css")).toExternalForm());
         //sets the scene on the primary stage
         primaryStage.setScene(scene1);
         //sets the title

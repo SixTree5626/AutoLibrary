@@ -142,7 +142,7 @@ public class GameLibraryController {
         if (info == null) {
             try {
                 Stage popupStage = new Stage();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("incompleteAddScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/incompleteAddScreen.fxml"));
                 Parent root = loader.load();
 
                 IncompleteAddScreenController controller = loader.getController();
@@ -150,7 +150,7 @@ public class GameLibraryController {
                 controller.setPopupStage(popupStage);
                 //Sets a new scene
                 Scene scene = new Scene(root, 371, 186);
-                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene4.css")).toExternalForm());
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/stylingForScene4.css")).toExternalForm());
                 popupStage.setScene(scene);
                 popupStage.setTitle("Game Not Found");
                 popupStage.showAndWait();
@@ -190,7 +190,7 @@ public class GameLibraryController {
     //method for loading the manual entry screen
     private void loadGameDatabase3Screen() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameDatabase3.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/GameDatabase3.fxml"));
             Parent root = loader.load();
 
             GameDatabaseController controller = loader.getController();
@@ -199,7 +199,7 @@ public class GameLibraryController {
             controller.setGameLibrary(gameLibrary);
 
             Scene scene = new Scene(root, 600, 400);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene3.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/stylingForScene3.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle("Add New Game");
         } catch (IOException e) {
@@ -219,13 +219,13 @@ public class GameLibraryController {
     //method for showing the library
     private void showLibrary() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameLibrary3.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/GameLibrary3.fxml"));
             Parent root = loader.load();
             GameLibraryController gameLibraryController = loader.getController();
             gameLibraryController.setMainWindow(mainWindow);
             gameLibraryController.setUserName(userName);
             Scene scene = new Scene(root, 600, 500);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylingForScene2.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/stylingForScene2.css")).toExternalForm());
             mainWindow.setScene(scene);
             mainWindow.setTitle(userName + "'s Game Library");
         } catch (Exception e) {
