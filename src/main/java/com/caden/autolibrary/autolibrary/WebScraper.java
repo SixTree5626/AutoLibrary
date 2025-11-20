@@ -57,13 +57,34 @@ public class WebScraper {
                     if (header != null && data != null) {
                         String label = header.text().toLowerCase();
                         if (label.contains("release")) {
-                            // Define a regex pattern to find dates in the format "Month Day, Year".
-                            Pattern datePattern = Pattern.compile("(?<month>January|February|March|April|May|June|July|August|September|October|November|December)\\s+(?<day>\\d{1,2}),\\s+(?<year>\\d{4})");
-                            Matcher matcher = datePattern.matcher(data.text());
-
-                            // If a date matching the pattern is found, store it.
-                            if (matcher.find()) {
-                                releaseDate = matcher.group(0);
+                            // Try multiple date formats
+                            String dateText = data.text();
+                            // Format 1: "Month Day, Year" (e.g., "March 3, 1995")
+                            Pattern datePattern1 = Pattern.compile("(?<month>January|February|March|April|May|June|July|August|September|October|November|December)\\s+(?<day>\\d{1,2}),\\s+(?<year>\\d{4})");
+                            // Format 2: "Day Month Year" (e.g., "3 March 1995")
+                            Pattern datePattern2 = Pattern.compile("(?<day>\\d{1,2})\\s+(?<month>January|February|March|April|May|June|July|August|September|October|November|December)\\s+(?<year>\\d{4})");
+                            // Format 3: "YYYY-MM-DD" (e.g., "1995-03-03")
+                            Pattern datePattern3 = Pattern.compile("(?<year>\\d{4})-(?<month>\\d{1,2})-(?<day>\\d{1,2})");
+                            
+                            Matcher matcher;
+                            
+                            // Try each pattern in order
+                            if ((matcher = datePattern1.matcher(dateText)).find() ||
+                                (matcher = datePattern2.matcher(dateText)).find() ||
+                                (matcher = datePattern3.matcher(dateText)).find()) {
+                                
+                                String month = matcher.group("month");
+                                String day = matcher.group("day");
+                                String year = matcher.group("year");
+                                
+                                // Standardize the output format to "Month Day, Year"
+                                releaseDate = String.format("%s %s, %s", 
+                                    month.matches("\\d{1,2}") ? 
+                                        new String[]{"January", "February", "March", "April", "May", "June", 
+                                        "July", "August", "September", "October", "November", "December"}
+                                        [Integer.parseInt(month) - 1] : month,
+                                    day,
+                                    year);
                             }
                             break; // Exit the loop after finding the first release date to avoid platform-specific dates.
                         }
