@@ -53,6 +53,8 @@ public class GameLibraryController {
         StringBuilder sb = new StringBuilder();
         sb.append("Your Game Library:\n\n");
 
+        sb.append("You have " + gameLibrary.size() + " games in your library \n\n");
+
         if (gameLibrary.isEmpty()) {
             sb.append("Library is empty. Click 'Yes' to add your first game!");
         } else {

@@ -123,7 +123,7 @@ public class GameDatabaseController {
             return false;
         }
         
-        gameLibrary.add(game);
+        gameLibrary.addFirst(game);
         
         // Save after each addition
         saveLibrary(gameLibrary, fileName);
